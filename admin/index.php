@@ -22,7 +22,8 @@
                            
                              <h1 class="page-header">
                             Welcome to admin
-                            <small>Author</small>
+                           
+                            <small> <?php echo $_SESSION['username']; ?></small>
                         </h1>
                            
                     </div>
