@@ -50,17 +50,13 @@ while($row = mysqli_fetch_assoc($select_all_posts_query))
                 <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="">
                 <hr>
                 <p><?php echo $post_content; ?></p>
-                <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                
 
                 <hr>
     
-<?php
-    
-}
-
-    
-    
-?>
+<?php } ?>
+  
+  
    <!-- Blog Comments -->
 <?php
 if(isset($_POST['create_comment']))
