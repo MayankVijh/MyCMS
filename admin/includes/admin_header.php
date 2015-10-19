@@ -45,7 +45,7 @@ else
     <![endif]-->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script src="http://tinymce.cachefly.net/4.2/tinymce.min.js"></script>
-<script src="./js/scripts.js"></script>
+
 
 </head>
 
