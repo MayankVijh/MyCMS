@@ -10,13 +10,15 @@ if(isset($_GET['edit_user']))
     {
         $user_id = $row['user_id'];
         $username = $row['username'];
-        $user_password = $row['user_password'];
+        $user_password = ""; //$row['user_password'];
         $user_firstname = $row['user_firstname'];
         $user_lastname = $row['user_lastname'];
         $user_email = $row['user_email'];
         $user_image = $row['user_image'];
         $user_role = $row['user_role'];
     }
+    
+     
 }
 
 if (isset($_POST['edit_user']))
@@ -30,18 +32,45 @@ if (isset($_POST['edit_user']))
         $user_role = $_POST['user_role'];
     
     
+    $query = "SELECT randSalt FROM users";
+    $select_randsalt_query = mysqli_query($connection, $query);
+    if(!$select_randsalt_query)
+    {
+        die("QUERY FAILED" . mysqli_error($connection));
+    }
+    
+    $row = mysqli_fetch_array($select_randsalt_query);
+    $salt = $row['randSalt'];
+    $hashed_password = crypt($user_password, $salt);
+    
+    
+    if(!empty($user_password)) {
+
+$query = "UPDATE users SET ";
+$query .="user_password = '{$hashed_password}' ";
+
+$query .= "WHERE user_id = {$the_user_id} ";
+
+$edit_user_password = mysqli_query($connection,$query);
+
+confirmQuery($edit_user_password);
+
+}
+
+
      
      $query = "UPDATE users SET ";
      $query .="user_firstname = '{$user_firstname}', ";
      $query .="user_lastname = '{$user_lastname}', ";
      $query .="user_role = '{$user_role}', ";
      $query .="username = '{$username}', ";
-     $query .="user_email = '{$user_email}', ";
-     $query .="user_password = '{$user_password}' ";
+     $query .="user_email = '{$user_email}' ";
+     
      $query .="WHERE user_id = {$the_user_id} ";
 
        $edit_user_post = mysqli_query($connection,$query);
      confirmQuery($edit_user_post);
+     echo "User Updated: " . " " . "<a href='users.php'>View Users</a>";
 
 }
 
@@ -66,7 +95,7 @@ if (isset($_POST['edit_user']))
     
     <div class="form-group">
     <select name="user_role" id="">
-            <option value="subscriber"><?php echo $user_role; ?></option>
+            <option value="<?php echo $user_role; ?>"><?php echo $user_role; ?></option>
 
 <?php
 if ($user_role == 'admin')

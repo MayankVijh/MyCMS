@@ -6,6 +6,7 @@
 
 if(isset($_POST['login']))
 {
+    
     $username = $_POST['username'];
     $password = $_POST['password'];
     
@@ -30,6 +31,8 @@ if(isset($_POST['login']))
 
         
     }
+    $password = crypt($password, $db_user_password);
+    
     
     if($username !== $db_username && $password !== $db_user_password)
     {
